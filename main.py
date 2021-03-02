@@ -7,9 +7,11 @@ import sys
 import subprocess
 import sqlite3
 import shutil
+from urlparse import urlparse
 
 from workflow import Workflow3
 
+__version__ = '1.0.0'
 log = None
 
 
@@ -19,52 +21,51 @@ def get_all_tabs():
     )['items']
 
 
-def maybe_copy_db():
-
-    def cache_db(name):
-        cache = wf.datafile(name)
-        if os.path.isfile(cache) and time.time() - os.path.getmtime(cache) < 300:
-            return cache
-        shutil.copy(
-            os.path.join(
-                os.path.expanduser("~/Library/Application Support/Google/Chrome/Default"), name
-            ),
-            cache
-        )
+def cache_db():
+    history = 'History'
+    cache = wf.datafile(history)
+    if os.path.isfile(cache) and time.time() - os.path.getmtime(cache) < 300:
         return cache
-
-    return cache_db('History'), cache_db('Favicons')
+    shutil.copy(
+        os.path.join(
+            os.path.expanduser("~/Library/Application Support/Google/Chrome/Default"),
+            history
+        ),
+        cache
+    )
+    return cache
 
 
 def get_history(search):
-    history_db, favicon_db = maybe_copy_db()
-    conn = sqlite3.connect(history_db)
-    conn.cursor().execute('ATTACH DATABASE ? AS favicons', (favicon_db,)).close()
+    conn = sqlite3.connect(cache_db())
+    search_terms = search.strip().split(' ')
+    filters = ' OR '.join(
+        f for f in ['urls.title like ?' , 'urls.url like ?'] * len(search_terms)
+    )
     query = """
         SELECT
             urls.title,
-            urls.url,
-            favicon_bitmaps.image_data,
-            favicon_bitmaps.last_updated
+            urls.url
         FROM urls
-        LEFT JOIN icon_mapping ON icon_mapping.page_url = urls.url
-        LEFT JOIN favicon_bitmaps ON favicon_bitmaps.id =(
-            SELECT id
-            FROM favicon_bitmaps
-            WHERE favicon_bitmaps.icon_id = icon_mapping.icon_id
-            ORDER BY width DESC LIMIT 1
-        )
-        WHERE urls.title like ? OR urls.url like ?
+        WHERE {}
         ORDER BY visit_count DESC, last_visit_time DESC
-    """
-    search = '%{}%'.format(search)
+    """.format(filters)
+    search_args = [
+        t
+        for term in search_terms
+        for t in ['%{}%'.format(term)] * 2
+    ]
     return [
         {
             "title": title,
             "url": url,
-            "icon": image_data if image_data and image_last_updated else None
         }
-        for (title, url, image_data, image_last_updated) in conn.execute(query, (search, search))
+        for idx, (title, url) in enumerate(conn.execute(query, search_args))
+        # ignore google or duckduckgo history
+        if (
+            all(seg not in ('google', 'duckduckgo') for seg in urlparse(url).netloc.split('.'))
+            and urlparse(url).scheme in ('http', 'https')
+        )
     ]
 
 
@@ -84,7 +85,8 @@ def main(wf):
                 title=item['title'],
                 subtitle='[T]: {}'.format(item['url']),
                 arg='focus {}'.format(item['arg']),
-                valid=True
+                valid=True,
+                icon='./resources/icons/open-in-browser-32.png'
         )
     tab_urls = set(tab['url'] for tab in tabs)
     count = len(matched_tabs)
@@ -94,30 +96,39 @@ def main(wf):
                 title=item['title'],
                 subtitle='[H]: {}'.format(item['url']),
                 arg=item['url'],
-                valid=True
+                valid=True,
+                icon='./resources/icons/watch-32.png'
             )
             count += 1
             if count >= 18:
                 break
 
     wf.add_item(
-        title='google {}'.format(query),
+        title='Google Search: {}'.format(query),
         subtitle="search on google",
         arg='https://www.google.com/search?q={}'.format(query),
-        valid=True
+        valid=True,
+        icon='./resources/icons/google.png'
     )
     wf.add_item(
-        title='Duduckgo {}'.format(query),
+        title='Duduckgo Search: {}'.format(query),
         subtitle="search on Duckduckgo",
         arg='https://www.google.com/search?q={}'.format(query),
-        valid=True
+        valid=True,
+        icon='./resources/icons/duckduckgo.png'
     )
     # Send output to Alfred
     wf.send_feedback()
 
 
 if __name__ == '__main__':
-    wf = Workflow3()
+    wf = Workflow3(
+        update_settings={
+            'github_slug': 'lydian/alfred-goto',
+            'version': __version__,
+
+        }
+    )
     # Assign Workflow logger to a global variable for convenience
     log = wf.logger
     sys.exit(wf.run(main))
