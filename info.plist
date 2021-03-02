@@ -6,11 +6,11 @@
 	<string>lydian.browser-goto</string>
 	<key>connections</key>
 	<dict>
-		<key>0AB28ACF-82A6-4912-A806-770C0E63B3A7</key>
+		<key>345931C2-CFE5-4EAB-9E0F-AAC1691C5B15</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>BC837D47-41D5-435E-BD9C-9D9849E58609</string>
+				<string>B3BC7ABD-65CB-401E-8A77-4046D0CC6C15</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -19,15 +19,42 @@
 				<false/>
 			</dict>
 		</array>
-		<key>BC837D47-41D5-435E-BD9C-9D9849E58609</key>
+		<key>B3BC7ABD-65CB-401E-8A77-4046D0CC6C15</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>8B3F67D7-CB2A-4EFD-8D6B-4C763795B87C</string>
+				<string>B88D5CC7-326F-49D3-86BD-CFA5E5CA405C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B88D5CC7-326F-49D3-86BD-CFA5E5CA405C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B4983DBB-1A53-465F-A2F4-C0E3E0DF56A4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>F7438802-927A-4F4B-8928-04B2C933CC2E</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E291DEB3-1AF8-42CB-8724-25A54B7EB6D5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>sourceoutputuid</key>
+				<string>FC7F2876-C5EB-49FC-B0FB-BCE1E7854EC5</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -46,18 +73,94 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./resources/chrome-control/chrome.js {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>B4983DBB-1A53-465F-A2F4-C0E3E0DF56A4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>goto</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>python main.py {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Keywords</string>
+				<key>title</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>B3BC7ABD-65CB-401E-8A77-4046D0CC6C15</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>argument</key>
-				<integer>0</integer>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>goto </string>
 				<key>focusedappvariable</key>
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>0</integer>
+				<integer>37</integer>
 				<key>hotmod</key>
-				<integer>0</integer>
+				<integer>1048576</integer>
+				<key>hotstring</key>
+				<string>L</string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -68,47 +171,70 @@
 			<key>type</key>
 			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>0AB28ACF-82A6-4912-A806-770C0E63B3A7</string>
+			<string>345931C2-CFE5-4EAB-9E0F-AAC1691C5B15</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>goto</string>
-				<key>subtext</key>
-				<string></string>
-				<key>text</key>
-				<string>website to visit</string>
-				<key>withspace</key>
-				<true/>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>focus .*</string>
+						<key>outputlabel</key>
+						<string>open Tab</string>
+						<key>uid</key>
+						<string>F7438802-927A-4F4B-8928-04B2C933CC2E</string>
+					</dict>
+					<dict>
+						<key>inputstring</key>
+						<string></string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>https?://.*</string>
+						<key>outputlabel</key>
+						<string>new Tab</string>
+						<key>uid</key>
+						<string>FC7F2876-C5EB-49FC-B0FB-BCE1E7854EC5</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.utility.conditional</string>
 			<key>uid</key>
-			<string>BC837D47-41D5-435E-BD9C-9D9849E58609</string>
+			<string>B88D5CC7-326F-49D3-86BD-CFA5E5CA405C</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>externaltriggerid</key>
+				<key>browser</key>
 				<string></string>
-				<key>passinputasargument</key>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
 				<true/>
-				<key>passvariables</key>
-				<true/>
-				<key>workflowbundleid</key>
-				<string>com.clintonstrong.SearchTabs</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.callexternaltrigger</string>
+			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>8B3F67D7-CB2A-4EFD-8D6B-4C763795B87C</string>
+			<string>E291DEB3-1AF8-42CB-8724-25A54B7EB6D5</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -117,26 +243,40 @@
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>0AB28ACF-82A6-4912-A806-770C0E63B3A7</key>
+		<key>345931C2-CFE5-4EAB-9E0F-AAC1691C5B15</key>
 		<dict>
 			<key>xpos</key>
-			<integer>70</integer>
+			<integer>15</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>125</integer>
 		</dict>
-		<key>8B3F67D7-CB2A-4EFD-8D6B-4C763795B87C</key>
+		<key>B3BC7ABD-65CB-401E-8A77-4046D0CC6C15</key>
 		<dict>
 			<key>xpos</key>
-			<integer>405</integer>
+			<integer>195</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>125</integer>
 		</dict>
-		<key>BC837D47-41D5-435E-BD9C-9D9849E58609</key>
+		<key>B4983DBB-1A53-465F-A2F4-C0E3E0DF56A4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>255</integer>
+			<integer>600</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>40</integer>
+		</dict>
+		<key>B88D5CC7-326F-49D3-86BD-CFA5E5CA405C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>400</integer>
+			<key>ypos</key>
+			<integer>130</integer>
+		</dict>
+		<key>E291DEB3-1AF8-42CB-8724-25A54B7EB6D5</key>
+		<dict>
+			<key>xpos</key>
+			<integer>595</integer>
+			<key>ypos</key>
+			<integer>195</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
