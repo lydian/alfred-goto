@@ -11,7 +11,7 @@ from urlparse import urlparse
 
 from workflow import Workflow3
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 log = None
 
 
@@ -39,8 +39,8 @@ def cache_db():
 def get_history(search):
     conn = sqlite3.connect(cache_db())
     search_terms = search.strip().split(' ')
-    filters = ' OR '.join(
-        f for f in ['urls.title like ?' , 'urls.url like ?'] * len(search_terms)
+    filters = ' AND '.join(
+        ['(urls.title like ? OR urls.url like ?)'] * len(search_terms)
     )
     query = """
         SELECT
